@@ -8,6 +8,10 @@
 #include <stdarg.h>     // va_list(), va_start(), va_end()
 #include <stdbool.h>    // true, false
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define MAX_STRING_BUFFER 1024
 
 //----------------------------------------------------------------------------------
@@ -795,9 +799,7 @@ char *string_replace(char *str, char *substr, char *replacement)
     }
 
     char *output = malloc(length_buf);
-    
 
-    printf("truer\n");
     memcpy(output, str, pos);
     memcpy(output + pos, replacement, length_rep);
     memcpy(output + pos + length_rep, str + pos + length_sub, length_str - length_sub);
@@ -961,5 +963,9 @@ char *string_reverse(char *str)
 
     return output;
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ZString_H
