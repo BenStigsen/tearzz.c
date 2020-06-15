@@ -61,7 +61,7 @@ char *string_lower(char str[]);
 
 // --- Replacing --- //
 char *string_replace(char str[], char substr[], char replacement[]);
-// TODO -> REPLACE ALL
+char *string_replace_all(char str[], char substr[], char replacement[]);
 
 // --- Inserting --- //
 char *string_insert(char str[], char substr[], unsigned int index);
@@ -756,15 +756,70 @@ char *string_lower(char *str)
 char *string_replace(char *str, char *substr, char *replacement)
 
 returns:
+    > <str> with first occurence of <substr> replaced with <replacement>
+    > NULL if invalid <str> or <substr>
+    > needs to be freed!
+
+example:
+    > string_replace("Hello Hello World", "Hello", "Bye") -> "Bye Hello World"
+                      ^---^
+*/
+char *string_replace(char *str, char *substr, char *replacement)
+{
+    if (!str || !substr)    {return NULL;}
+    if (!replacement)       {return str;}
+
+    size_t length_buf;
+    size_t length_str = strlen(str);
+    size_t length_sub = strlen(substr);
+    size_t length_rep = strlen(replacement);
+
+    if (length_str < length_sub || length_str == 0 || length_sub == 0) {return 0;}
+
+    char *ptr = strstr(str, substr);
+
+    if (ptr == NULL) 
+    {
+        return str;
+    }
+
+    int pos = (ptr - str);
+
+    if (length_sub < length_rep)
+    {
+        length_buf = length_str + (length_rep - length_sub);
+    }
+    else
+    {
+        length_buf = length_str - (length_sub - length_rep);
+    }
+
+    char *output = malloc(length_buf);
+    
+
+    printf("truer\n");
+    memcpy(output, str, pos);
+    memcpy(output + pos, replacement, length_rep);
+    memcpy(output + pos + length_rep, str + pos + length_sub, length_str - length_sub);
+
+    output[length_buf] = '\0';
+
+    return output;
+}
+
+/*
+char *string_replace_all(char *str, char *substr, char *replacement)
+
+returns:
     > <str> with every occurence of <substr> replaced with <replacement>
     > NULL if invalid <str> or <substr>
     > needs to be freed!
 
 example:
-    > string_replace("Hello World", "Hello", "Goodbye") -> "Goodbye World"
-                      ^---^
+    > string_replace_all("Hello Hello World", "Hello", "Bye") -> "Bye Bye World"
+                          ^---^ ^---^
 */
-char *string_replace(char *str, char *substr, char *replacement)
+char *string_replace_all(char *str, char *substr, char *replacement)
 {
     if (!str || !substr)    {return NULL;}
     if (!replacement)       {return str;}
