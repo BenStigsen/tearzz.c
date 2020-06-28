@@ -1,5 +1,5 @@
-#ifndef ZString_H
-#define ZString_H
+#ifndef ZSTRING_H
+#define ZSTRING_H
 
 #include <stdio.h>      // vsprintf()
 #include <ctype.h>      // toupper(), tolower()
@@ -968,4 +968,4 @@ char *string_reverse(char *str)
 }
 #endif
 
-#endif // ZString_H
+#endif // ZSTRING_H
