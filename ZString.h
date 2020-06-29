@@ -73,6 +73,11 @@ char *string_insert(char str[], char substr[], unsigned int index);
 // --- Reversing --- //
 char *string_reverse(char str[]);
 
+// --- Getting --- //
+char *string_before(char str[], char substr[]);
+char *string_after(char str[], char substr[]);
+char *string_between(char str[], char a[], char b[]);
+
 //----------------------------------------------------------------------------------
 // ZString Function Definitions
 //----------------------------------------------------------------------------------
@@ -960,6 +965,152 @@ char *string_reverse(char *str)
     }
 
     output[length_str] = '\0';
+
+    return output;
+}
+
+// --- Getting --- //
+
+/*
+char *string_before(char *str, char *substr)
+
+returns:
+    > returns the string before <substr> in <str>
+    > NULL if invalid <str> or <substr>
+    > needs to be freed!
+
+example:
+    > string_before("Hello There World", "There") -> "Hello "
+*/
+char *string_before(char str[], char substr[])
+{
+    if (!str || !substr) {return NULL;}
+    
+    size_t length_str = strlen(str);
+    size_t length_sub = strlen(substr);
+
+    int pos;
+
+    if (length_str > 0 && length_sub > 0)
+    {
+        const char *ptr;
+
+        ptr = str;
+        ptr = strstr(ptr, substr);
+    
+        if (ptr != NULL)
+        {
+            pos = ptr - str;
+        } 
+        else {return NULL;}
+    }
+
+    char *output = malloc(pos + 1);
+
+    memcpy(output, str, pos);
+    
+    output[pos] = '\0';
+
+    return output;
+}
+
+/*
+char *string_after(char *str, char *substr)
+
+returns:
+    > returns the string after <substr> in <str>
+    > NULL if invalid <str> or <substr>
+    > needs to be freed!
+
+example:
+    > string_after("Hello There World", "There") -> " World"
+*/
+char *string_after(char str[], char substr[])
+{
+    if (!str || !substr) {return NULL;}
+    
+    size_t length_str = strlen(str);
+    size_t length_sub = strlen(substr);
+
+    int pos;
+
+    if (length_str > 0 && length_sub > 0)
+    {
+        const char *ptr;
+
+        ptr = str;
+        ptr = strstr(ptr, substr);
+    
+        if (ptr != NULL)
+        {
+            pos = ptr - str;
+        } 
+        else {return NULL;}
+    }
+
+    size_t length_buf = (length_str - length_sub) - pos;
+
+    char *output = malloc(length_buf + 1);
+
+    memcpy(output, str + pos + length_sub, length_buf);
+    
+    output[length_buf] = '\0';
+
+    return output;
+}
+
+/*
+char *string_between(char *str, char *a, char *b)
+
+returns:
+    > returns the string between <a> and <b> in <str>
+    > NULL if invalid <str>, <a> or <b>
+    > needs to be freed!
+
+example:
+    > string_between("Hello There World", "Hello", "World") -> " There "
+*/
+char *string_between(char str[], char a[], char b[])
+{
+    if (!str || !a || !b) {return NULL;}
+    
+    size_t length_str = strlen(str);
+    size_t length_a = strlen(a);
+    size_t length_b = strlen(b);
+
+    int pos_a;
+    int pos_b;
+
+    if (length_str > 0 && length_a > 0 && length_b > 0)
+    {
+        const char *ptr;
+
+        ptr = str;
+        ptr = strstr(ptr, a);
+    
+        if (ptr != NULL)
+        {
+            pos_a = ptr - str;
+        } 
+        else {return NULL;}
+
+        ptr = str;
+        ptr = strstr(ptr, b);
+    
+        if (ptr != NULL)
+        {
+            pos_b = ptr - str;
+        }
+        else {return NULL;}
+    }
+
+    size_t length_buf = (pos_b - (pos_a + length_a));
+
+    char *output = malloc(length_buf + 1);
+
+    memcpy(output, str + (pos_a + length_a), length_buf);
+    
+    output[length_buf] = '\0';
 
     return output;
 }
