@@ -1,3 +1,14 @@
+/*
+Includes the following functions which all return true or false
+ - is_png(char *filename)
+ - is_jpg(char *filename)
+ - is_gif(char *filename)
+ - is_bmp(char *filename)
+ - is_mng(char *filename)
+ - is_ppm(char *filename)
+ - is_psd(char *filename)
+*/
+
 #ifndef ZIMAGE_H
 #define ZIMAGE_H
 
