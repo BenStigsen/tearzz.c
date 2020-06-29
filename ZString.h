@@ -18,65 +18,65 @@ extern "C" {
 // ZString Function Declarations
 //----------------------------------------------------------------------------------
 
-const char *string_format(char str[], ...);
+const char *string_format(char *str, ...);
 
 // --- Location Index --- //
-int string_find(char str[], char substr[]);
-int string_find_nth(char str[], char substr[], unsigned int nth);
+int string_find(char *str, char *substr);
+int string_find_nth(char *str, char *substr, unsigned int nth);
 
 // --- Counting --- //
-unsigned int string_count(char str[], char substr[]);
-unsigned int string_count_overlap(char str[], char substr[]);
+unsigned int string_count(char *str, char *substr);
+unsigned int string_count_overlap(char *str, char *substr);
 
-unsigned int string_streak(char str[], char substr[]);
+unsigned int string_streak(char *str, char *substr);
 
 // --- Booleans --- //
-bool string_contains(char str[], char substr[]);
-bool string_starts_with(char str[], char substr[]);
-bool string_ends_with(char str[], char substr[]);
+bool string_contains(char *str, char *substr);
+bool string_starts_with(char *str, char *substr);
+bool string_ends_with(char *str, char *substr);
 
 // --- Functions that require "free()" --- //
 
 // --- Slicing --- //
-char *string_slice(char str[], unsigned int start, unsigned int end);
+char *string_slice(char *str, unsigned int start, unsigned int end);
 
 // --- Cutting --- //
-char *string_cut_left(char str[], unsigned int amount);
-char *string_cut_right(char str[], unsigned int amount);
+char *string_cut_left(char *str, unsigned int amount);
+char *string_cut_right(char *str, unsigned int amount);
 
 // --- Splitting ---//
-char **string_split(char str[], char delimiter[]);
+char **string_split(char *str, char *delimiter);
 
 // --- Trimming --- //
-char *string_trim_left(char str[], char substr[]);
-char *string_trim_right(char str[], char substr[]);
+char *string_trim_left(char *str, char *substr);
+char *string_trim_right(char *str, char *substr);
 
 // --- Removing --- //
-char *string_remove(char str[], char substr[]);
-char *string_remove_all(char str[], char substr[]);
+char *string_remove(char *str, char *substr);
+char *string_remove_all(char *str, char *substr);
 
 // --- Shifting --- //
-char *string_shift_left(char str[], unsigned int amount);
-char *string_shift_right(char str[], unsigned int amount);
+char *string_shift_left(char *str, unsigned int amount);
+char *string_shift_right(char *str, unsigned int amount);
 
 // --- Capitalizing --- //
-char *string_upper(char str[]);
-char *string_lower(char str[]);
+char *string_upper(char *str);
+char *string_lower(char *str);
 
 // --- Replacing --- //
-char *string_replace(char str[], char substr[], char replacement[]);
-char *string_replace_all(char str[], char substr[], char replacement[]);
+char *string_replace(char *str, char *substr, char *replacement);
+char *string_replace_all(char *str, char *substr, char *replacement);
 
 // --- Inserting --- //
-char *string_insert(char str[], char substr[], unsigned int index);
+char *string_insert(char *str, char *substr, unsigned int index);
 
 // --- Reversing --- //
-char *string_reverse(char str[]);
+char *string_reverse(char *str);
 
 // --- Getting --- //
-char *string_before(char str[], char substr[]);
-char *string_after(char str[], char substr[]);
-char *string_between(char str[], char a[], char b[]);
+char *string_before(char *str, char *substr);
+char *string_after(char *str, char *substr);
+char *string_between(char *str, char *a, char *b);
 
 //----------------------------------------------------------------------------------
 // ZString Function Definitions
@@ -982,7 +982,7 @@ returns:
 example:
     > string_before("Hello There World", "There") -> "Hello "
 */
-char *string_before(char str[], char substr[])
+char *string_before(char *str, char *substr)
 {
     if (!str || !substr) {return NULL;}
     
@@ -1025,7 +1025,7 @@ returns:
 example:
     > string_after("Hello There World", "There") -> " World"
 */
-char *string_after(char str[], char substr[])
+char *string_after(char *str, char *substr)
 {
     if (!str || !substr) {return NULL;}
     
@@ -1070,7 +1070,7 @@ returns:
 example:
     > string_between("Hello There World", "Hello", "World") -> " There "
 */
-char *string_between(char str[], char a[], char b[])
+char *string_between(char *str, char *a, char *b)
 {
     if (!str || !a || !b) {return NULL;}
     
