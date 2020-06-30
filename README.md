@@ -4,5 +4,5 @@ Repository with header-only files. Inspired by [nothings' stb repo](https://gith
 
 |  Library | LoC | Description |
 |----------|-----|-------------|
-| **[ZString.h](ZString.h)** | 547 | string manipulation |
-| **[ZImage.h](ZImage.h)** | 45 | image format checking |
+| **[ZString.h](ZString.h)** | 549 | string manipulation |
+| **[ZImage.h](ZImage.h)** | 48 | image format checking |
