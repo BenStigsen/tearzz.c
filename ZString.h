@@ -1,3 +1,7 @@
+/*
+    #define ZSTRING_IMPLEMENTATION
+*/
+
 #ifndef ZSTRING_H
 #define ZSTRING_H
 
@@ -13,6 +17,7 @@ extern "C" {
 #endif
 
 #define MAX_STRING_BUFFER 1024
+
 
 //----------------------------------------------------------------------------------
 // ZString Function Declarations
@@ -78,9 +83,13 @@ char *string_before(char *str, char *substr);
 char *string_after(char *str, char *substr);
 char *string_between(char *str, char *a, char *b);
 
+#endif // ZSTRING_H
+
 //----------------------------------------------------------------------------------
 // ZString Function Definitions
 //----------------------------------------------------------------------------------
+
+#ifdef ZSTRING_IMPLEMENTATION
 
 const char *string_format(char *str, ...) 
 {
@@ -1119,4 +1128,4 @@ char *string_between(char *str, char *a, char *b)
 }
 #endif
 
-#endif // ZSTRING_H
+#endif // ZSTRING_IMPLEMENTATION
