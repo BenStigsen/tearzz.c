@@ -1,4 +1,6 @@
 /*
+#define ZIMAGE_IMPLEMENTATION
+
 Includes the following functions which all return true or false
  - is_png(char *filename)
  - is_jpg(char *filename)
@@ -35,6 +37,20 @@ const int HEADER_MNG[8] = {138, 77, 78, 71, 13, 10, 26, 10};
 const int HEADER_PPM[2] = {80, 52};
 const int HEADER_PSD[4] = {56, 66, 80, 83};
 
+//----------------------------------------------------------------------------------
+// ZImage Function Declarations
+//----------------------------------------------------------------------------------
+
+bool has_header(char *filename, const int *header);
+
+#endif // ZIMAGE_H
+
+//----------------------------------------------------------------------------------
+// ZString Function Definitions
+//----------------------------------------------------------------------------------
+
+#ifdef ZIMAGE_IMPLEMENTATION
+
 bool has_header(char *filename, const int *header)
 {
 	int byte;
@@ -65,4 +81,4 @@ bool has_header(char *filename, const int *header)
 }
 #endif
 
-#endif // ZIMAGE_H
+#endif // ZIMAGE_IMPLEMENTATION
