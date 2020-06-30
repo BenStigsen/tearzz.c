@@ -16,14 +16,9 @@
 extern "C" {
 #endif
 
-#define MAX_STRING_BUFFER 1024
-
-
-//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 // ZString Function Declarations
-//----------------------------------------------------------------------------------
-
-const char *string_format(char *str, ...);
+//----------------------------------------------------------------------------
 
 // --- Location Index --- //
 int string_find(char *str, char *substr);
@@ -40,7 +35,12 @@ bool string_contains(char *str, char *substr);
 bool string_starts_with(char *str, char *substr);
 bool string_ends_with(char *str, char *substr);
 
-// --- Functions that require "free()" --- //
+//----------------------------------------------------------------------------
+// Functions that require "free()"
+//----------------------------------------------------------------------------
+
+// --- Formatting --- //
+char *string_format(char *str, ...);
 
 // --- Slicing --- //
 char *string_slice(char *str, unsigned int start, unsigned int end);
@@ -85,25 +85,15 @@ char *string_between(char *str, char *a, char *b);
 
 #endif // ZSTRING_H
 
-//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 // ZString Function Definitions
-//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 
 #ifdef ZSTRING_IMPLEMENTATION
 
-const char *string_format(char *str, ...) 
-{
-    static char output[MAX_STRING_BUFFER] = { 0 };
-
-    va_list args;
-    va_start(args, str);
-    vsprintf(output, str, args);
-    va_end(args);
-
-    return output;
-}
-
-// --- Location Index --- //
+//----------------|
+// Location Index |
+//----------------|
 
 /*
 int string_find(char *str, char *substr)
@@ -180,7 +170,9 @@ int string_find_nth(char *str, char *substr, unsigned int count)
     return pos;
 }
 
-// --- Counting --- //
+//----------|
+// Counting |
+//----------|
 
 /*
 unsigned int string_count(char *str, char *substr)
@@ -285,7 +277,9 @@ unsigned int string_streak(char *str, char *substr)
     return count;
 }
 
-// --- Booleans --- //
+//----------|
+// Booleans |
+//----------|
 
 /*
 bool string_contains(char *str, char *substr)
@@ -331,7 +325,51 @@ bool string_ends_with(char *str, char *substr)
     return (strncmp(str + (strlen(str) - strlen(substr)), substr, strlen(substr)) == 0 ? true : false);
 }
 
-// --- Slicing --- //
+//------------|
+// Formatting |
+//------------|
+
+/*
+int string_format(char *str, ...)
+
+returns:
+    > <str> formatted with extra arguments
+    > needs to be freed!
+    > NULL if invalid <str>
+
+example:
+    > string_format("Hello %s", "World") -> "Hello World"
+*/
+char *string_format(char *str, ...) 
+{
+    if (!str) {return NULL;}
+
+    va_list args;
+    
+    va_start(args, str);
+    int length_buf = vsnprintf(NULL, 0, str, args);
+    va_end(args);
+
+    if (length_buf > 0)
+    {
+        ++length_buf;
+        char *output = malloc(length_buf);
+
+        va_start(args, str);
+        vsnprintf(output, length_buf, str, args);
+        va_end(args);
+
+        output[length_buf] = '\0';
+        return output;
+    }
+
+    return str;
+
+}
+
+//---------|
+// Slicing |
+//---------|
 
 /*
 char *string_slice(char *str, unsigned int start, unsigned int end)
@@ -359,7 +397,9 @@ char *string_slice(char *str, unsigned int start, unsigned int end)
     return output;
 }
 
-// --- Cutting --- //
+//---------|
+// Cutting |
+//---------|
 
 /*
 char *string_cut_left(char *str, unsigned int amount)
@@ -467,7 +507,9 @@ char **string_split(char *str, char *delimiter)
     return output;
 }
 
-// --- Trimming --- //
+//----------|
+// Trimming |
+//----------|
 
 /*
 char *string_trim_left(char *str, char *substr)
@@ -526,7 +568,9 @@ char *string_trim_right(char *str, char *substr)
     }
 }
 
-// --- Removing --- //
+//----------|
+// Removing |
+//----------|
 
 /*
 char *string_remove(char *str, char *substr)
@@ -640,7 +684,9 @@ char *string_remove_all(char *str, char *substr)
     return output;
 }
 
-// --- Shifting --- //
+//----------|
+// Shifting |
+//----------|
 
 /*
 char *string_shift_left(char *str, unsigned int amount)
@@ -704,7 +750,9 @@ char *string_shift_right(char *str, unsigned int amount)
     return output;
 }
 
-// --- Capitalization --- //
+//----------------|
+// Capitalization |
+//----------------|
 
 /*
 char *string_upper(char *str) 
@@ -768,7 +816,9 @@ char *string_lower(char *str)
     return output;
 }
 
-// --- Replacing --- //
+//-----------|
+// Replacing |
+//-----------|
 
 /*
 char *string_replace(char *str, char *substr, char *replacement)
@@ -910,7 +960,9 @@ char *string_replace_all(char *str, char *substr, char *replacement)
     return output;
 }
 
-// --- Inserting --- //
+//-----------|
+// Inserting |
+//-----------|
 
 /*
 char *string_insert(char *str, char *substr, unsigned int index)
@@ -944,7 +996,9 @@ char *string_insert(char *str, char *substr, unsigned int index)
     return output;
 }
 
-// --- Reversing --- //
+//-----------|
+// Reversing |
+//-----------|
 
 /*
 char *string_reverse(char *str)
@@ -978,7 +1032,9 @@ char *string_reverse(char *str)
     return output;
 }
 
-// --- Getting --- //
+//---------|
+// Getting |
+//---------|
 
 /*
 char *string_before(char *str, char *substr)
